@@ -6,6 +6,7 @@ import com.rajesh.Vision_Tracker_GoalOS.auth.service.JwtService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -22,6 +23,9 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private UserRepo userRepository;
     @Autowired
     private JwtService jwtService;
+
+    @Value("${frontend.url}")
+    private String frontendUrl;
 
     public OAuth2SuccessHandler(
             UserRepo userRepository,
@@ -83,7 +87,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
                 jwtService.generateToken(user.getUsername());
 
         String redirectUrl =
-                "http://localhost:5173/oauth2/success"
+                frontendUrl+"/oauth2/success"
                         + "?token=" + URLEncoder.encode(
                         token,
                         StandardCharsets.UTF_8
