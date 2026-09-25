@@ -20,8 +20,13 @@ public class Tasks {
     @ManyToOne
     @JoinColumn(name = "milestone_id")
     private MileStones mileStones;
+
+    @Column(length = 500)
     private String title;
+
+    @Column(columnDefinition = "TEXT")
     private String description;
+
     private String priority;
     private Integer estimated_hours;
     private String status;
